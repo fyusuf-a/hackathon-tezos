@@ -1,1 +1,26 @@
-spring.application.name=hackathon-tezos
+logging:
+  include-application-name: false
+spring:
+  application:
+    name: hackathon-tezos
+  config:
+    import: optional:file:.env[.properties]
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+springdoc:
+  disable-i18n: true
+  api-docs:
+    path: /spec.json
+  swagger-ui:
+    use-root-path: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+error:
+  handling:
+    full-stacktrace-http-statuses:
+    - 5xx
+    log-levels:
+      4xx: DEBUG
