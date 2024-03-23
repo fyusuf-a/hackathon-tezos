@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 		transpile: ['vuetify'],
 	},
 	modules: [
+		'@vueuse/nuxt',
 		'@pinia/nuxt',
 	],
 	pinia: {
@@ -16,7 +17,7 @@ export default defineNuxtConfig({
         server: {
             proxy: {
                 '/api/': {
-                    target: 'http://localhost:8000/',
+                    target: 'http://localhost:8080/',
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api/, ''),
                 },
@@ -25,7 +26,8 @@ export default defineNuxtConfig({
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/ghostnet/, ''),
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						"Host": "node.ghostnet.etherlink.com",
 					}
                 }
             }
