@@ -1,5 +1,21 @@
 <template>
 	<div>
+		<!--
+			<div>
+				<div>
+					{{ truncatedText }}
+					<v-expand-transition>
+						<div v-show="!isTruncated">
+							{{ textEnd }}
+						</div>
+					</v-expand-transition>
+				</div>
+
+				<div text @click="toggleText" class="mt-3 view-toggle">
+					<strong>{{ isTruncated ? 'View More' : 'View Less' }}</strong>
+				</div>
+			</div>
+		-->
 		<transition v-if="isTruncated" name="fade">
 			<div>
 				{{ truncatedText }}
