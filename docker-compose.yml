@@ -1,23 +1,48 @@
 version: '3.4'
-
 services:
-  frontend:
-    image: hackathon-webapp
+  webapp:
+    image: nectart/hackathon-tezos-webapp
+    restart: unless-stopped
     volumes:
       - ./webapp:/app
     build:
       context: ./webapp
-    ports:
-      - 8000:8000
     environment:
       VITE_MAGIC_PUBLISHABLE_KEY: ${MAGIC_PUBLISHABLE_KEY}
-    network_mode: host
+  api:
+    image: nectart/hackathon-tezos-api
+    build: ./api/
+    restart: unless-stopped
+    init: true
+    environment:
+      DATABASE_HOST: mysql
+      MYSQL_PASSWORD: password
+      SERVER_SERVLET_CONTEXT-PATH: /api/
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_ENDPOINT_SECRET: ${STRIPE_ENDPOINT_SECRET}
+      WEB3_PRIVATE_KEY: ${WEB3_PRIVATE_KEY}
   proxy:
     image: nginx:alpine
+    restart: unless-stopped
     volumes:
       - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80
-    depends_on:
-      - frontend
-    network_mode: host
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: nectart
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+        - ./data/mysql:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: password
+      PMA_ABSOLUTE_URI: /phpmyadmin/
