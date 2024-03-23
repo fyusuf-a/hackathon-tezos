@@ -35,7 +35,7 @@ public class SecurityConfiguration {
 			})
 			.authorizeHttpRequests((matcher) -> {
 				matcher.requestMatchers("/spec.json/**", "/swagger-ui.html", "/swagger-ui/**", "/").permitAll();
-				matcher.requestMatchers("/v1/auth/login").permitAll();
+				matcher.requestMatchers("/auth/login").permitAll();
 				matcher.requestMatchers("/error").permitAll();
 				matcher.requestMatchers("/**").fullyAuthenticated();
 			})
