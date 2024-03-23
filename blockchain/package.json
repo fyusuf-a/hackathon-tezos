@@ -6,7 +6,8 @@
   "scripts": {
     "deploy-token": "hardhat ignition deploy ./ignition/modules/NectartToken.ts --network etherlink-testnet",
     "deploy-usdc": "hardhat ignition deploy ./ignition/modules/USDCToken.ts --network etherlink-testnet",
-    "verify": "hardhat ignition verify chain-128123 --network etherlink-testnet"
+    "verify": "hardhat ignition verify chain-128123 --network etherlink-testnet",
+    "test": "hardhat test"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
