@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  frontend:
+  webapp:
     image: hackathon-webapp
     volumes:
       - ./webapp:/app
@@ -11,7 +11,6 @@ services:
       - 8000:8000
     environment:
       VITE_MAGIC_PUBLISHABLE_KEY: ${MAGIC_PUBLISHABLE_KEY}
-    network_mode: host
   proxy:
     image: nginx:alpine
     volumes:
@@ -19,5 +18,4 @@ services:
     ports:
       - 80:80
     depends_on:
-      - frontend
-    network_mode: host
+      - webapp
