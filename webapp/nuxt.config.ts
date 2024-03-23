@@ -12,4 +12,23 @@ export default defineNuxtConfig({
 	pinia: {
 		storesDirs: ['./stores/**'],
 	},
+    vite: {
+        server: {
+            proxy: {
+                '/api/': {
+                    target: 'http://localhost:8000/',
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/api/, ''),
+                },
+                '/ghostnet/': {
+                    target: 'https://node.ghostnet.etherlink.com/',
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/ghostnet/, ''),
+					headers: {
+						"Content-Type": "application/json"
+					}
+                }
+            }
+        },
+	}
 })

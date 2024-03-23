@@ -27,6 +27,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: "empty",
+});
 
 const productTitle = 'In The Darkness Above She Waits';
 const productAuthor = 'José Delbo';
