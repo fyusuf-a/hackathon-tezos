@@ -1,5 +1,8 @@
 <template>
-  <v-card title="USDC Token" subtitle="Get some stable-coin">
+  <v-card
+    title="USDC Token"
+    :subtitle="`Current amount: ${currentAmount} USDC`"
+  >
     <v-card-text>
       <v-form>
         <v-text-field
@@ -86,5 +89,16 @@ async function mint() {
   } finally {
     pending.value = false;
   }
+
+  refreshCurrentAmount();
 }
+
+const currentAmount = ref(BigInt(0));
+async function refreshCurrentAmount() {
+  const decimals = await magicStore.coinContract.decimals();
+  const amount = await magicStore.coinContract.balanceOf(magicStore.address);
+  currentAmount.value = amount / BigInt(10) ** decimals;
+}
+
+onMounted(refreshCurrentAmount);
 </script>

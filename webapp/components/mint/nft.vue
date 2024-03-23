@@ -1,5 +1,8 @@
 <template>
-  <v-card title="NECTART NFT" subtitle="Get some perfume">
+  <v-card
+    title="NECTART NFT"
+    :subtitle="`Current amount: ${currentAmount} perfume`"
+  >
     <v-card-actions class="justify-end">
       <v-btn @click="mint"> MINT </v-btn>
     </v-card-actions>
@@ -58,5 +61,16 @@ async function mint() {
   } finally {
     pending.value = false;
   }
+
+  refreshCurrentAmount();
 }
+
+const currentAmount = ref(BigInt(0));
+async function refreshCurrentAmount() {
+  currentAmount.value = await magicStore.nftContract.balanceOf(
+    magicStore.address
+  );
+}
+
+onMounted(refreshCurrentAmount);
 </script>
