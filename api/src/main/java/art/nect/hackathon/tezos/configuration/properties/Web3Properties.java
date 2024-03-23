@@ -4,7 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 /**
@@ -22,5 +25,23 @@ public class Web3Properties {
 	private String clientAddress;
 	private Long httpTimeoutSeconds;
 	private boolean debug;
+
+	@NotBlank
+	private String privateKey;
+
+	@Positive
+	public long chainId;
+
+	@NotNull
+	@Valid
+	public Contracts contracts;
+
+	@Data
+	public static class Contracts {
+
+		@NotBlank
+		private String auction;
+
+	}
 
 }

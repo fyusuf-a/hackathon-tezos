@@ -1,3 +1,6 @@
 web3:
 #  client-address: https://node.ghostnet.etherlink.com/
   client-address: http://localhost/ghostnet/
+  chain-id: 128123
+  contracts:
+    auction: "0xfb855AF19f8dae93c8E777B38A0dF6d80222E664"
