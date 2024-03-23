@@ -15,7 +15,6 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import art.nect.hackathon.tezos.configuration.properties.Web3Properties;
 import art.nect.hackathon.tezos.contract.AuctionContract;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -65,16 +64,6 @@ public class Web3jConfiguration {
 	@Bean
 	Credentials web3Credentials(Web3Properties properties) {
 		return Credentials.create(properties.getPrivateKey());
-	}
-
-	@Bean
-	@SneakyThrows
-	String chainId(Web3j web3j) {
-		final var chainId = web3j.ethChainId().send().getChainId().toString();
-
-		log.info("chainId={}", chainId);
-
-		return chainId;
 	}
 
 	@Bean
