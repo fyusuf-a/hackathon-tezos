@@ -33,7 +33,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
 
 const { text, maxLength } = defineProps({
 	text: {
