@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 
 dotenv.config()
 if (!process.env.PRIVATE_KEY) {
-  throw new Error("PRIVATE_KEY is not set");
+  console.warn("PRIVATE_KEY is not set")
+  process.env.PRIVATE_KEY = "a b c d e f g h i j k l"
 }
 
 const config: HardhatUserConfig = {
