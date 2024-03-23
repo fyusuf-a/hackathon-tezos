@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@pinia/nuxt": "^0.5.1",
     "ethers": "^6.11.1",
     "magic-sdk": "^28.0.1",
