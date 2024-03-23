@@ -37,6 +37,7 @@ public class SecurityConfiguration {
 				matcher.requestMatchers("/spec.json/**", "/swagger-ui.html", "/swagger-ui/**", "/").permitAll();
 				matcher.requestMatchers("/external/**").permitAll();
 				matcher.requestMatchers("/auth/login").permitAll();
+				matcher.requestMatchers("/web3/contracts").permitAll();
 				matcher.requestMatchers("/error").permitAll();
 				matcher.requestMatchers("/**").fullyAuthenticated();
 			})

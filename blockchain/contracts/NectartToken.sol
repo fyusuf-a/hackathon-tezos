@@ -13,7 +13,8 @@ contract NectartToken is ERC721, Ownable {
         Ownable(msg.sender)
     {}
 
-    function safeMint(address to) public onlyOwner {
+    /* allow anyone to mint for testing purposes */
+    function safeMint(address to) public {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
     }

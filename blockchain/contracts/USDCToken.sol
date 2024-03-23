@@ -11,7 +11,8 @@ contract USDCToken is ERC20, Ownable {
         Ownable(msg.sender)
     {}
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    /* allow anyone to mint for testing purposes */
+    function mint(address to, uint256 amount) public {
         _mint(to, amount);
     }
 }

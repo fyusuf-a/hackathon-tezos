@@ -6,6 +6,7 @@
   "scripts": {
     "deploy-token": "hardhat ignition deploy ./ignition/modules/NectartToken.ts --network etherlink-testnet",
     "deploy-usdc": "hardhat ignition deploy ./ignition/modules/USDCToken.ts --network etherlink-testnet",
+    "deploy-auctions": "hardhat ignition deploy ./ignition/modules/AuctionContract.ts --network etherlink-testnet",
     "verify": "hardhat ignition verify chain-128123 --network etherlink-testnet",
     "test": "hardhat test"
   },
