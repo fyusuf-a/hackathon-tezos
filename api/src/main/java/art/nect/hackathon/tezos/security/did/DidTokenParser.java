@@ -24,6 +24,7 @@ public class DidTokenParser {
 	public static final TypeReference<Map<String, JsonNode>> MAP_STRING_TO_JSON_NODE = new TypeReference<>() {};
 
 	private final ObjectMapper objectMapper;
+	private final DidTokenValidator validator;
 
 	public DidToken parse(String token) {
 		final String decoded;
@@ -48,15 +49,11 @@ public class DidTokenParser {
 		final var rawClaims = parts.get(1);
 
 		final var claims = parseClaims(rawClaims);
-		validate(proof, claims, rawClaims);
-		
+		validator.validate(proof, rawClaims, claims);
+
 		final var address = claims.get("iss").asString().substring("did:ethr:".length());
 
 		return new DidToken(proof, rawClaims, claims, address);
-	}
-
-	public void validate(String proof, Map<String, Claim> claims, String rawClaims) {
-		// TODO Impl
 	}
 
 	private Map<String, Claim> parseClaims(String raw) {
