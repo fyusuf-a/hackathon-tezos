@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 @RestController
 @RequestMapping(path = "/external/stripe", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = Tags.AUTH)
+@Tag(name = Tags.EXTERNAL)
 public class ExternalStripeRestControllerV1 {
 
 	private final StripeProperties stripeProperties;

@@ -17,7 +17,6 @@ import lombok.Data;
 public class Web3Properties {
 
 	public static final String PREFIX = "web3";
-	public static final String PREFIX_CLIENT_ADDRESS = PREFIX + ".client-address";
 
 	@NotBlank
 	private String clientAddress;
