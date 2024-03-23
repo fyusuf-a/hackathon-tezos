@@ -19,8 +19,15 @@
 		<springdoc.version>2.1.0</springdoc.version>
 		<error-handling.version>4.1.2</error-handling.version>
 		<web3j.version>4.9.2</web3j.version>
+		<stripe.version>24.21.0</stripe.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>${stripe.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.web3j</groupId>
 			<artifactId>core</artifactId>

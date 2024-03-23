@@ -12,6 +12,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "ethers": "^6.11.1",
+    "magic-sdk": "^28.0.1",
     "nuxt": "^3.11.1",
     "pinia": "^2.1.7",
     "sass": "^1.72.0",

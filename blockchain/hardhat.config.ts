@@ -1,8 +1,12 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-verify";
+import dotenv from "dotenv";
 
+dotenv.config()
 if (!process.env.PRIVATE_KEY) {
-  throw new Error("PRIVATE_KEY is not set");
+  console.warn("PRIVATE_KEY is not set")
+  process.env.PRIVATE_KEY = "0x1111111111111111111111111111111111111111111111111111111111111111"
 }
 
 const config: HardhatUserConfig = {
@@ -14,6 +18,21 @@ const config: HardhatUserConfig = {
       accounts: [process.env.PRIVATE_KEY],
     },
   },
+  etherscan: {
+    enabled: true,
+    apiKey: "x",
+    customChains: [
+      {
+        network: "etherlink-testnet",
+        chainId: 128123,
+        urls: {
+          browserURL: "https://testnet-explorer.etherlink.com",
+          apiURL: "https://testnet-explorer.etherlink.com/api",
+        }
+      }
+    ],
+  },
+  
 };
 
 export default config;

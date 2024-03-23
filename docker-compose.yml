@@ -9,6 +9,8 @@ services:
       context: ./webapp
     ports:
       - 8000:8000
+    environment:
+      VITE_MAGIC_PUBLISHABLE_KEY: ${MAGIC_PUBLISHABLE_KEY}
     network_mode: host
   proxy:
     image: nginx:alpine
