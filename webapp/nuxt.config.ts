@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
 	ssr: false,
 	devtools: { enabled: true },
+	css: ['vuetify/lib/styles/main.sass'],
+	build: {
+		transpile: ['vuetify'],
+	},
 	modules: [
 		'@pinia/nuxt',
 	],
