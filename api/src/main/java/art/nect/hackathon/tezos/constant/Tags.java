@@ -7,5 +7,6 @@ public class Tags {
 
 	public static final String AUTH = "auth";
 	public static final String EXTERNAL = "external";
+	public static final String WEB3 = "web3";
 
 }

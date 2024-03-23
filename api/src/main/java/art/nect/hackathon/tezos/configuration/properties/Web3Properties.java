@@ -40,6 +40,12 @@ public class Web3Properties {
 	public static class Contracts {
 
 		@NotBlank
+		private String usdc;
+
+		@NotBlank
+		private String nectart;
+
+		@NotBlank
 		private String auction;
 
 	}

@@ -3,4 +3,6 @@ web3:
   client-address: http://localhost/ghostnet/
   chain-id: 128123
   contracts:
+    usdc: "0x22D20809e513dfF439BacaE4CcEA55A205FDFc79"
+    nectart: "0xF18B7fE6aB807540674B77cf00b80f3Dc0dF97a1"
     auction: "0xfb855AF19f8dae93c8E777B38A0dF6d80222E664"
