@@ -32,6 +32,7 @@ springdoc:
     use-root-path: true
     tags-sorter: alpha
     operations-sorter: alpha
+error:
   handling:
     full-stacktrace-http-statuses:
     - 5xx
