@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="pending" class="d-flex align-center justify-center">
+  <v-container v-if="initialRefresh" class="d-flex align-center justify-center">
     <v-progress-circular indeterminate />
   </v-container>
   <v-container v-else style="height: 100vh" class="d-flex align-center flex">
@@ -17,7 +17,9 @@
         <v-card class="pa-4" height="100%" width="100%">
           <div class="text-h4 text-wrap mb-2">{{ perfume.name }}</div>
           <div>
-            <div class="mb-6">by <strong>{{ productAuthor }}</strong></div>
+            <div class="mb-6">
+              by <strong>{{ productAuthor }}</strong>
+            </div>
             <div class="d-flex justify-space-between mb-2">
               <span>Best bid</span>
               <strong>{{ bestBid }} ${{ symbol }}</strong>
@@ -83,6 +85,7 @@ const bestBidderName = ref<string>();
 const decimals = ref<number>();
 const symbol = ref<string>();
 
+const initialRefresh = ref(true);
 const pending = ref(false);
 async function refresh() {
   pending.value = true;
@@ -96,12 +99,10 @@ async function refresh() {
     symbol.value = await coinToken.symbol();
 
     seller.value = auction[0];
-    sellerName.value = toShortAddress(seller.value);
     tokenId.value = Number(auction[1]);
     deadline.value = new Date(Number(auction[2]));
     coinContractAddress.value = auction[3];
     bestBidder.value = auction[4];
-    bestBidderName.value = toShortAddress(bestBidder.value);
     bestBid.value = Number(auction[5] / BigInt(10) ** BigInt(decimals.value));
     bestBidIsVirtual.value = auction[6];
     claimedNft.value = auction[7];
@@ -113,6 +114,8 @@ async function refresh() {
       const displayName = user.name || user.email;
       if (displayName) {
         sellerName.value = displayName;
+      } else {
+        sellerName.value = toShortAddress(seller.value);
       }
     } catch (error) {
       console.error({ error });
@@ -124,16 +127,20 @@ async function refresh() {
       const displayName = user.name || user.email;
       if (displayName) {
         bestBidderName.value = displayName;
+      } else {
+        bestBidderName.value = toShortAddress(bestBidder.value);
       }
     } catch (error) {
       console.error({ error });
     }
   } finally {
     pending.value = false;
+    initialRefresh.value = false;
   }
 }
 
 onMounted(refresh);
+useIntervalFn(refresh, 2000);
 
 const productAuthor = "José Delbo";
 </script>
