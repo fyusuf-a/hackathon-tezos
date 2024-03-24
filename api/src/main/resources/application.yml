@@ -44,3 +44,6 @@ web3:
     usdc: "0x22D20809e513dfF439BacaE4CcEA55A205FDFc79"
     nectart: "0xe709f23fDc3F5bD6821C947892B7aFfCDc2D8Da1"
     auction: "0x9d88c81F34E93F325ee9AA1ed9058655612a100F"
+app:
+  avatar:
+    url-format: https://www.gravatar.com/avatar/{address}?s=128&d=identicon&r=PG

@@ -3,6 +3,8 @@ package art.nect.hackathon.tezos.domain.user;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
+import art.nect.hackathon.tezos.domain.user.exception.UserNotFoundException;
+import art.nect.hackathon.tezos.web.form.UserPatchForm;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -21,11 +23,28 @@ public class UserService {
 			final var message = String.valueOf(exception);
 
 			if (message.contains(User.UNIQUE_ADDRESS_CONTRAINT)) {
-				return repository.findByAddress(address).get();
+				return get(address);
 			}
 
 			throw exception;
 		}
+	}
+
+	public User get(String address) {
+		return repository.findByAddress(address)
+			.orElseThrow(() -> new UserNotFoundException(address));
+	}
+
+	public User update(User user, UserPatchForm form) {
+		if (form.getEmail() != null) {
+			user.setEmail(form.getEmail());
+		}
+
+		if (form.getName() != null) {
+			user.setName(form.getName());
+		}
+
+		return repository.save(user);
 	}
 
 }

@@ -41,6 +41,12 @@ public class User {
 	@Column(nullable = false)
 	private String address;
 
+	@Column(nullable = true)
+	private String email;
+
+	@Column(nullable = true)
+	private String name;
+
 	@CreatedDate
 	@Column(nullable = false)
 	private LocalDateTime createdAt;

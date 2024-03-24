@@ -8,8 +8,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserDto {
-	
+
 	private String address;
+	private String email;
+	private String name;
 	private LocalDateTime createdAt;
 
 }

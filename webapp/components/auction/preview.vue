@@ -5,15 +5,14 @@
     <v-card-text>
       <div class="d-flex flex-row align-center">
         <v-avatar size="32">
-          <v-img
-            :src="`https://www.gravatar.com/avatar/${seller}?s=128&d=identicon&r=PG`"
-          />
+          <v-img :src="`/api/users/${seller}/avatar`" />
         </v-avatar>
         <a
           class="ml-2 text-decoration-none"
           :href="`https://testnet-explorer.etherlink.com/address/${seller}`"
           target="_blank"
-          >{{ shortSeller }}</a
+          @click.stop
+          >{{ sellerName }}</a
         >
       </div>
       <div class="d-flex flex-column align-end">
@@ -38,20 +37,22 @@ const props = defineProps<{
 const perfume = computed(() => getPerfume(props.id));
 
 const seller = ref<string>();
+const sellerName = ref<string>();
 const lastBid = ref<number>();
 
-const shortSeller = computed(() => {
-  if (!seller.value) {
+function toShortAddress(address: string) {
+  if (!address) {
     return "???";
   }
 
-  const prefix = seller.value.substring(0, 2 + 4);
-  const suffix = seller.value.substring(
-    seller.value.length - 4,
-    seller.value.length
+  const prefix = address.substring(0, 2 + 4);
+  const suffix = address.substring(
+    address.length - 4,
+    address.length
   );
+
   return `${prefix}...${suffix}`;
-});
+};
 
 const pending = ref(true);
 onMounted(async () => {
@@ -64,7 +65,19 @@ onMounted(async () => {
     const decimals = await coinToken.decimals();
 
     seller.value = auction[0];
+    sellerName.value = toShortAddress(seller.value!)
     lastBid.value = Number(auction[5] / BigInt(10) ** decimals);
+
+    try {
+      const user = await $fetch<any>(`/api/users/${seller.value}`)
+
+      const displayName = user.name || user.email
+      if (displayName) {
+        sellerName.value = displayName
+      }
+    } catch (error) {
+      console.error({ error })
+    }
   } finally {
     pending.value = false;
   }
