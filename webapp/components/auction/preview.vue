@@ -1,7 +1,7 @@
 <template>
-  <v-card :loading="pending" height="430" width="100%">
-    <v-img :src="getPerfume(id).imageUrl" height="300" width="100%" cover />
-    <v-card-title>{{ getPerfume(id).name }}</v-card-title>
+  <v-card :loading="pending" height="430" width="100%" :to="`/auctions/${id}`">
+    <v-img :src="perfume.imageUrl" height="300" width="100%" cover />
+    <v-card-title>{{ perfume.name }}</v-card-title>
     <v-card-text>
       <div class="d-flex flex-row align-center">
         <v-avatar size="32">
@@ -34,6 +34,8 @@ const props = defineProps<{
   id: number;
   decimals: number;
 }>();
+
+const perfume = computed(() => getPerfume(props.id));
 
 const seller = ref<string>();
 const lastBid = ref<number>();
