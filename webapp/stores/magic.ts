@@ -5,6 +5,7 @@ import { Magic } from "magic-sdk";
 import USDCToken from "~/contracts/USDCToken.json";
 import NectartToken from "~/contracts/NectartToken.json";
 import AuctionContract from "~/contracts/AuctionContract.json";
+import { useConfigurationStore } from "./configuration";
 
 const customNodeOptions = {
   rpcUrl: window.origin + "/ghostnet/",
@@ -16,11 +17,9 @@ const magic = new Magic(import.meta.env.VITE_MAGIC_PUBLISHABLE_KEY, {
 });
 
 export const useMagicStore = defineStore("magicStore", () => {
-  const addresses = ref<{
-    usdc: string;
-    nectart: string;
-    auction: string;
-  }>();
+  const configurationStore = useConfigurationStore();
+
+  const addresses = computed(() => configurationStore.web3Contracts);
 
   const provider = ref<() => ethers.BrowserProvider>(
     () => new ethers.BrowserProvider(magic.rpcProvider)
@@ -76,16 +75,6 @@ export const useMagicStore = defineStore("magicStore", () => {
     loadContract(AuctionContract.abi as any, addresses.value?.auction!)
   );
 
-  const initial = new Promise(async (resolve) => {
-    try {
-      addresses.value = await $fetch(`/api/web3/contracts`);
-    } catch (error) {
-      console.error({ error });
-    }
-
-    resolve(42);
-  });
-
   async function getGasPrice() {
     return (await provider.value().getFeeData()).gasPrice! * BigInt(2);
   }
@@ -104,6 +93,5 @@ export const useMagicStore = defineStore("magicStore", () => {
     coinContract,
     nftContract,
     auctionContract,
-    initial,
   };
 });

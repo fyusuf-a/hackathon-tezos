@@ -10,11 +10,11 @@
 </template>
 
 <script setup lang="ts">
-const magicStore = useMagicStore();
+const configurationStore = useConfigurationStore();
 
 const loaded = ref(false);
 onMounted(async () => {
-  await magicStore.initial;
+  await configurationStore.initial;
   loaded.value = true;
 });
 </script>
