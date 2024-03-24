@@ -44,21 +44,6 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <v-snackbar v-model="snackbar" :timeout="10_000">
-      Auction has been
-      <a
-        :href="`https://testnet-explorer.etherlink.com/tx/${transactionHash}`"
-        target="_blank"
-        >created</a
-      >.
-
-      <template #actions>
-        <v-btn color="blue" variant="text" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </v-container>
 </template>
 
@@ -125,9 +110,6 @@ const canCreate = computed(
 
 const pending = ref(false);
 
-const snackbar = ref(false);
-const transactionHash = ref("");
-
 async function refresh() {
   if (!magicStore.isConnected) {
     return;
@@ -193,13 +175,9 @@ async function create() {
           gasPrice: await magicStore.getGasPrice(),
         }
       );
-      transactionHash.value = transaction.hash;
-
       console.log({ transaction });
 
       const receipt = await transaction.wait();
-      snackbar.value = true;
-
       console.log({ receipt });
 
       auctionId = receipt.logs[1].args[0];

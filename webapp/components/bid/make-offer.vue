@@ -91,21 +91,6 @@
       >
         <v-progress-circular indeterminate />
       </v-overlay>
-
-      <v-snackbar v-model="snackbar" :timeout="10_000">
-        Bid has been
-        <a
-          :href="`https://testnet-explorer.etherlink.com/tx/${transactionHash}`"
-          target="_blank"
-          >placed</a
-        >.
-
-        <template v-slot:actions>
-          <v-btn color="blue" variant="text" @click="snackbar = false">
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
     </v-card>
   </v-dialog>
   <bid-stripe
@@ -157,9 +142,6 @@ watch(
 );
 
 const tab = ref(0);
-
-const snackbar = ref(false);
-const transactionHash = ref("");
 
 const pending = ref(false);
 
@@ -229,13 +211,9 @@ async function bidViaEthereum() {
         gasPrice: await magicStore.getGasPrice(),
       }
     );
-    transactionHash.value = transaction.hash;
-
     console.log({ transaction });
 
     const receipt = await transaction.wait();
-    snackbar.value = true;
-
     console.log({ receipt });
   }
 
