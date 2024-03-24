@@ -111,6 +111,7 @@ describe("AuctionContract", function () {
     it("Should have no auctions", async function () {
       const { auctionContract } = await loadFixture(deployFixture);
 
+      expect(await auctionContract.auctionsCount()).to.equal(0);
       expect(auctionContract.auctions(0)).to.be.reverted;
     });
 
@@ -151,6 +152,8 @@ describe("AuctionContract", function () {
           .to.emit(auctionContract, "AuctionCreated")
           .withArgs(0);
 
+        expect(await auctionContract.auctionsCount()).to.equal(1);
+
         expect([...(await auctionContract.auctions(0))]).to.have.members([
           /*seller:*/ owner.address,
           /*tokenId:*/ hardhat.ethers.toBigInt(ownerNftId2),
@@ -166,6 +169,8 @@ describe("AuctionContract", function () {
         await expect(auctionContract.create(ownerNftId, coinContract, 456))
           .to.emit(auctionContract, "AuctionCreated")
           .withArgs(1);
+
+        expect(await auctionContract.auctionsCount()).to.equal(2);
       });
     });
 
@@ -310,7 +315,7 @@ describe("AuctionContract", function () {
             /*claimedCoin:*/ false,
           ]);
         });
-        
+
         it("Should revert if before deadline", async function () {
           const { auctionContract, auctionId } = await loadFixture(
             claimFixture

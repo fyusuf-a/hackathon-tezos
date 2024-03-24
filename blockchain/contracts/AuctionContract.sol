@@ -45,6 +45,10 @@ contract AuctionContract is IERC721Receiver, Ownable, ReentrancyGuard {
         nftContract = nftContract_;
     }
 
+    function auctionsCount() external view returns (uint256) {
+        return auctions.length;
+    }
+
     function create(
         uint256 tokenId,
         IERC20 coinContract,
@@ -95,7 +99,10 @@ contract AuctionContract is IERC721Receiver, Ownable, ReentrancyGuard {
         Auction storage auction = auctions[auctionId];
 
         require(value > auction.bestBid, "Auction: Bid must be higher");
-        require(block.timestamp < auction.deadline, "Auction: Cannot place bid after deadline");
+        require(
+            block.timestamp < auction.deadline,
+            "Auction: Cannot place bid after deadline"
+        );
 
         if (!auction.bestBidIsVirtual) {
             auction.coinContract.transfer(auction.bestBidder, auction.bestBid);
