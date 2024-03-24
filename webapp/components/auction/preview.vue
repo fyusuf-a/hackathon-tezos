@@ -40,20 +40,6 @@ const seller = ref<string>();
 const sellerName = ref<string>();
 const lastBid = ref<number>();
 
-function toShortAddress(address: string) {
-  if (!address) {
-    return "???";
-  }
-
-  const prefix = address.substring(0, 2 + 4);
-  const suffix = address.substring(
-    address.length - 4,
-    address.length
-  );
-
-  return `${prefix}...${suffix}`;
-};
-
 const pending = ref(true);
 onMounted(async () => {
   try {
@@ -65,18 +51,18 @@ onMounted(async () => {
     const decimals = await coinToken.decimals();
 
     seller.value = auction[0];
-    sellerName.value = toShortAddress(seller.value!)
+    sellerName.value = toShortAddress(seller.value!);
     lastBid.value = Number(auction[5] / BigInt(10) ** decimals);
 
     try {
-      const user = await $fetch<any>(`/api/users/${seller.value}`)
+      const user = await $fetch<any>(`/api/users/${seller.value}`);
 
-      const displayName = user.name || user.email
+      const displayName = user.name || user.email;
       if (displayName) {
-        sellerName.value = displayName
+        sellerName.value = displayName;
       }
     } catch (error) {
-      console.error({ error })
+      console.error({ error });
     }
   } finally {
     pending.value = false;
