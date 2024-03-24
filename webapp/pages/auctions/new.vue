@@ -65,7 +65,7 @@
 import { getPerfume } from "~/data/perfumes";
 
 const magicStore = useMagicStore();
-const router = useRouter()
+const router = useRouter();
 
 const ids = ref(Array<number>());
 const nftItems = computed(() =>
@@ -158,6 +158,8 @@ async function refresh() {
 
       selectedCoin.value = coins.value[0].address;
     }
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }
@@ -199,11 +201,11 @@ async function create() {
 
       console.log({ receipt });
 
-      auctionId = receipt.logs[1].args[0]
+      auctionId = receipt.logs[1].args[0];
     }
 
-    console.log({ auctionId })
-    router.push(`/auctions/${auctionId}`)
+    console.log({ auctionId });
+    router.push(`/auctions/${auctionId}`);
   } catch (error) {
     console.error({ error });
   } finally {

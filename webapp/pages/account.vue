@@ -63,6 +63,8 @@ async function update() {
     } catch (error) {
       console.log({ error });
     }
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }
@@ -78,6 +80,8 @@ async function refresh() {
     const user = await $authFetch<any>(`/api/users/@me`);
     name.value = user.name;
     email.value = user.email;
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }

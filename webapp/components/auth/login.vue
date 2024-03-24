@@ -58,6 +58,8 @@ async function login() {
   pending.value = true;
   try {
     await magicStore.login(email.value);
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }

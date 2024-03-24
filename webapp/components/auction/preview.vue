@@ -31,7 +31,6 @@ const magicStore = useMagicStore();
 const props = defineProps<{
   /* consider inchanged */
   id: number;
-  decimals: number;
 }>();
 
 const perfume = computed(() => getPerfume(props.id));
@@ -64,6 +63,8 @@ onMounted(async () => {
     } catch (error) {
       console.error({ error });
     }
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }

@@ -148,6 +148,8 @@ async function refresh() {
     } catch (error) {
       console.error({ error });
     }
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
     initialRefresh.value = false;

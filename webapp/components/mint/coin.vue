@@ -86,6 +86,8 @@ async function mint() {
     snackbar.value = true;
 
     console.log({ receipt });
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }

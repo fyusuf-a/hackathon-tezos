@@ -31,11 +31,15 @@
       <v-card-text>
         <v-window v-model="tab">
           <v-window-item>
-            Hello <br />
-            Hello <br />
-            Hello <br />
-            Hello <br />
-            Hello
+            <v-form>
+              <v-text-field v-model="name" label="Name" />
+              <v-text-field
+                v-model="email"
+                label="Email"
+                type="email"
+                hide-details
+              />
+            </v-form>
           </v-window-item>
           <v-window-item>
             <div class="d-flex flex-row align-center">
@@ -121,6 +125,9 @@ const props = defineProps<{
   auctionId: number;
 }>();
 
+const name = ref("");
+const email = ref("");
+
 const model = defineModel<boolean>();
 const amount = ref(0);
 
@@ -151,6 +158,40 @@ const snackbar = ref(false);
 const transactionHash = ref("");
 
 const pending = ref(false);
+
+async function bidViaCreditCard() {
+  try {
+    await $authFetch(`/api/users/@me`, {
+      method: "PATCH",
+      body: {
+        name: name.value,
+      },
+    });
+  } catch (error) {
+    console.log({ error });
+  }
+
+  try {
+    await $authFetch(`/api/users/@me`, {
+      method: "PATCH",
+      body: {
+        email: email.value,
+      },
+    });
+  } catch (error) {
+    console.log({ error });
+  }
+
+  const bid = await $authFetch<any>(`/api/bids`, {
+    method: "POST",
+    body: {
+      auctionId: props.auctionId,
+      amount: amount.value,
+    },
+  });
+
+  console.log({ bid });
+}
 
 async function bidViaEthereum() {
   const coinContract = magicStore.loadERC20(props.coinContractAddress);
@@ -194,6 +235,7 @@ async function bid() {
   pending.value = true;
   try {
     if (tab.value == 0) {
+      await bidViaCreditCard();
     } else {
       await bidViaEthereum();
     }
@@ -203,8 +245,45 @@ async function bid() {
     });
 
     model.value = false;
+  } catch (error) {
+    console.log({ error });
   } finally {
     pending.value = false;
   }
 }
+
+async function refresh() {
+  if (!magicStore.isConnected) {
+    return;
+  }
+
+  pending.value = true;
+  try {
+    const user = await $authFetch<any>(`/api/users/@me`);
+    name.value = user.name;
+    email.value = user.email;
+  } catch (error) {
+    console.log({ error });
+  } finally {
+    pending.value = false;
+  }
+}
+
+watch(
+  () => magicStore.isConnected,
+  (value) => {
+    if (value) {
+      refresh();
+    }
+  },
+  {
+    immediate: true,
+  }
+);
+
+watch(model, (value) => {
+  if (value) {
+    refresh();
+  }
+});
 </script>
