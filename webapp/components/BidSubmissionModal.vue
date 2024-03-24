@@ -5,7 +5,7 @@
       style="min-width: 500px"
       centered
     />
-    <v-card v-else min-width="500px">
+    <v-card v-else ref="cardRef" min-width="500px">
       <v-card-title class="text-center">
         <strong>Make an Offer</strong>
       </v-card-title>
@@ -108,7 +108,11 @@
 </template>
 
 <script setup lang="ts">
+import party from "party-js";
+
 const magicStore = useMagicStore();
+
+const cardRef = ref<{ $el: HTMLElement }>();
 
 const props = defineProps<{
   bestBid: number;
@@ -193,6 +197,12 @@ async function bid() {
     } else {
       await bidViaEthereum();
     }
+
+    party.confetti(cardRef.value?.$el!, {
+      count: party.variation.range(20, 40),
+    });
+
+    model.value = false;
   } finally {
     pending.value = false;
   }
