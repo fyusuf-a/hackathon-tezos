@@ -8,10 +8,10 @@ import AuctionContract from "~/contracts/AuctionContract.json";
 import { useConfigurationStore } from "./configuration";
 
 const customNodeOptions = {
-  // rpcUrl: window.origin + "/ghostnet/",
-  // chainId: 128123,
-  rpcUrl: "https://sepolia.infura.io/v3/e1aa95990453490d8c334f88a5661da1",
-  chainId: 11155111,
+  rpcUrl: window.origin + "/ghostnet/",
+  chainId: 128123,
+  // rpcUrl: "https://sepolia.infura.io/v3/e1aa95990453490d8c334f88a5661da1",
+  // chainId: 11155111,
 };
 
 const magic = new Magic(import.meta.env.VITE_MAGIC_PUBLISHABLE_KEY, {
