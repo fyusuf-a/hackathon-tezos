@@ -14,6 +14,7 @@
       <v-list>
         <v-list-item prepend-icon="mdi-view-dashboard" title="Home" to="/" />
         <v-list-item prepend-icon="mdi-palette" title="Perfumes" to="/auctions" />
+        <v-list-item prepend-icon="mdi-account" title="Account" to="/account" />
         <v-list-item prepend-icon="mdi-faucet" title="Faucet" to="/faucet" />
       </v-list>
     </v-navigation-drawer>
