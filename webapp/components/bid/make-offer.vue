@@ -25,7 +25,7 @@
 
       <div class="d-flex justify-space-between mt-3 mx-6">
         <span>Current offer</span>
-        <strong>{{ bestBid }} ${{ symbol }}</strong>
+        <strong>${{ bestBid }}</strong>
       </div>
 
       <v-card-text>
@@ -65,7 +65,7 @@
 
       <div class="d-flex justify-space-between mx-6 mb-3">
         <span>Total</span>
-        <strong>{{ amount }} ${{ symbol }}</strong>
+        <strong>${{ amount }}</strong>
       </div>
 
       <v-divider thickness="2" />
@@ -115,7 +115,6 @@ const cardRef = ref<{ $el: HTMLElement }>();
 
 const props = defineProps<{
   bestBid: number;
-  symbol: string;
   coinContractAddress: string;
   auctionId: number;
 }>();

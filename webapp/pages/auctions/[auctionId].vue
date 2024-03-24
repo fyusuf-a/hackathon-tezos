@@ -22,7 +22,7 @@
             </div>
             <div class="d-flex justify-space-between mb-2">
               <span>Best bid</span>
-              <strong>{{ bestBid }} ${{ symbol }}</strong>
+              <strong>${{ bestBid }}</strong>
             </div>
             <div class="d-flex justify-space-between mb-2">
               <span>Best bidder</span>
@@ -58,7 +58,6 @@
     <bid-make-offer
       v-model="offerDialog"
       :best-bid="bestBid"
-      :symbol="symbol"
       :coin-contract-address="coinContractAddress"
       :auction-id="auctionId"
     />
@@ -96,7 +95,6 @@ const claimedCoin = ref<boolean>();
 const sellerName = ref<string>();
 const bestBidderName = ref<string>();
 const decimals = ref<number>();
-const symbol = ref<string>();
 
 const offerDialog = ref(false);
 
@@ -111,7 +109,6 @@ async function refresh() {
     const coinTokenAddress = auction[3];
     const coinToken = magicStore.loadERC20(coinTokenAddress);
     decimals.value = Number(await coinToken.decimals());
-    symbol.value = await coinToken.symbol();
 
     seller.value = auction[0];
     tokenId.value = Number(auction[1]);
@@ -134,6 +131,7 @@ async function refresh() {
       }
     } catch (error) {
       console.error({ error });
+      sellerName.value = toShortAddress(seller.value);
     }
 
     try {
@@ -147,6 +145,7 @@ async function refresh() {
       }
     } catch (error) {
       console.error({ error });
+      bestBidderName.value = toShortAddress(bestBidder.value);
     }
   } catch (error) {
     console.log({ error });
