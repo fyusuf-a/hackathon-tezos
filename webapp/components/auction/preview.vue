@@ -7,17 +7,12 @@
         <v-avatar size="32">
           <v-img :src="`/api/users/${seller}/avatar`" />
         </v-avatar>
-        <a
-          class="ml-2 text-decoration-none"
-          :href="`https://testnet-explorer.etherlink.com/address/${seller}`"
-          target="_blank"
-          @click.stop
-          >{{ sellerName }}</a
-        >
+        <a class="ml-2 text-decoration-none" :href="`https://testnet-explorer.etherlink.com/address/${seller}`"
+          target="_blank" @click.stop>{{ sellerName }}</a>
       </div>
       <div class="d-flex flex-column align-end">
         <span class="text-overline" style="line-height: unset"> Last bid </span>
-        <span class="font-weight-bold"> {{ lastBid }} $EUR </span>
+        <span class="font-weight-bold"> {{ lastBid }} $ </span>
       </div>
     </v-card-text>
   </v-card>
