@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stripe.exception.SignatureVerificationException;
+import com.stripe.model.Charge;
 import com.stripe.model.Customer;
 import com.stripe.net.Webhook;
 
 import art.nect.hackathon.tezos.configuration.properties.StripeProperties;
 import art.nect.hackathon.tezos.constant.Tags;
+import art.nect.hackathon.tezos.domain.bid.BidService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ExternalStripeRestControllerV1 {
 
 	private final StripeProperties stripeProperties;
+	
+	private final BidService bidService;
 
 	@SuppressWarnings("deprecation")
 	@PostMapping("/webhook")
@@ -43,6 +47,16 @@ public class ExternalStripeRestControllerV1 {
 				final var customer = ((Customer) object);
 				log.info("created customer - id={} email={}", customer.getId(), customer.getEmail());
 
+				break;
+			}
+
+			case "charge.succeeded": {
+				final var charge = ((Charge) object);
+				final var paymentIntentId = charge.getPaymentIntent();
+				log.info("succeeded charge - id={} paymentIntentId={}", charge.getId(), paymentIntentId);
+
+				bidService.markSuccessful(paymentIntentId);
+				
 				break;
 			}
 

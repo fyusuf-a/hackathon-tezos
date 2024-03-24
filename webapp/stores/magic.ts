@@ -36,6 +36,13 @@ export const useMagicStore = defineStore("magicStore", () => {
       showUI: true,
     }))!;
 
+    await $fetch(`/api/auth/login`, {
+      method: "POST",
+      body: {
+        didToken,
+      },
+    });
+
     const signerInstance = await provider.value().getSigner();
     signer.value = () => signerInstance;
     address.value = signerInstance.address;

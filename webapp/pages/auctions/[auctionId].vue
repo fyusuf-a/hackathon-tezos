@@ -55,7 +55,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <BidSubmissionModal
+    <bid-make-offer
       v-model="offerDialog"
       :best-bid="bestBid"
       :symbol="symbol"

@@ -16,6 +16,9 @@ public class BidDto {
 	private long auctionId;
 	private long amount;
 	private String stripePaymentIntentId;
+	private String stripeClientSecret;
+	private boolean success;
+	private String transactionHash;
 	private LocalDateTime createdAt;
 
 }

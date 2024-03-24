@@ -45,6 +45,15 @@ public class Bid {
 	@Column(nullable = false)
 	private String stripePaymentIntentId;
 
+	@Column(nullable = false)
+	private String stripeClientSecret;
+
+	@Column(nullable = false)
+	private boolean success;
+
+	@Column(nullable = true)
+	private String transactionHash;
+
 	@CreatedDate
 	@Column(nullable = false)
 	private LocalDateTime createdAt;

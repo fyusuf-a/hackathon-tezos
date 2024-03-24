@@ -81,7 +81,7 @@
 
       <v-divider thickness="2" />
 
-      <v-btn variant="tonal" class="ma-5" rounded="0" @click="bid">
+      <v-btn variant="tonal" class="ma-5" rounded="0" @click="doBid">
         Make offer
       </v-btn>
 
@@ -109,6 +109,12 @@
       </v-snackbar>
     </v-card>
   </v-dialog>
+  <bid-stripe
+    v-if="stripeDialog"
+    v-model="stripeDialog"
+    :payment-intent-id="bid.stripePaymentIntentId"
+    :client-secret="bid.stripeClientSecret"
+  />
 </template>
 
 <script setup lang="ts">
@@ -159,6 +165,9 @@ const transactionHash = ref("");
 
 const pending = ref(false);
 
+const bid = ref<any>();
+const stripeDialog = ref(false);
+
 async function bidViaCreditCard() {
   try {
     await $authFetch(`/api/users/@me`, {
@@ -182,13 +191,15 @@ async function bidViaCreditCard() {
     console.log({ error });
   }
 
-  const bid = await $authFetch<any>(`/api/bids`, {
+  bid.value = await $authFetch<any>(`/api/bids`, {
     method: "POST",
     body: {
       auctionId: props.auctionId,
       amount: amount.value,
     },
   });
+
+  stripeDialog.value = true;
 
   console.log({ bid });
 }
@@ -231,7 +242,7 @@ async function bidViaEthereum() {
   }
 }
 
-async function bid() {
+async function doBid() {
   pending.value = true;
   try {
     if (tab.value == 0) {
@@ -244,7 +255,7 @@ async function bid() {
       count: party.variation.range(20, 40),
     });
 
-    model.value = false;
+    // model.value = false;
   } catch (error) {
     console.log({ error });
   } finally {

@@ -15,6 +15,8 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import art.nect.hackathon.tezos.configuration.properties.Web3Properties;
 import art.nect.hackathon.tezos.contract.AuctionContract;
+import art.nect.hackathon.tezos.contract.USDCToken;
+import art.nect.hackathon.tezos.contract.USDCTokenFactory;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -71,6 +73,11 @@ public class Web3jConfiguration {
 		final var address = properties.getContracts().getAuction();
 
 		return AuctionContract.load(address, web3j, transactionManager, contractGasProvider);
+	}
+	
+	@Bean
+	USDCTokenFactory usdcTokenFactory(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, Web3Properties properties) {
+		return (address) -> USDCToken.load(address, web3j, transactionManager, contractGasProvider);
 	}
 
 }

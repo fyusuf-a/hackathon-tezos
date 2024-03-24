@@ -15,6 +15,9 @@ public class BidMapper {
 			.setAuctionId(bid.getAuctionId())
 			.setAmount(bid.getAmount())
 			.setStripePaymentIntentId(bid.getStripePaymentIntentId())
+			.setStripeClientSecret(bid.getStripeClientSecret())
+			.setSuccess(bid.isSuccess())
+			.setTransactionHash(bid.getTransactionHash())
 			.setCreatedAt(bid.getCreatedAt());
 	}
 
