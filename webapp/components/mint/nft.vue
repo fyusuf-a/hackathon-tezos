@@ -47,7 +47,7 @@ async function mint() {
     const transaction = await magicStore.nftContract.safeMint(
       magicStore.address,
       {
-        gasPrice: magicStore.gasPrice,
+        gasPrice: await magicStore.getGasPrice(),
       }
     );
     transactionHash.value = transaction.hash;

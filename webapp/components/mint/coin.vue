@@ -75,7 +75,7 @@ async function mint() {
       magicStore.address,
       value,
       {
-        gasPrice: magicStore.gasPrice,
+        gasPrice: await magicStore.getGasPrice(),
       }
     );
     transactionHash.value = transaction.hash;

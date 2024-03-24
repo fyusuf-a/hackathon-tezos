@@ -13,6 +13,7 @@
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item prepend-icon="mdi-view-dashboard" title="Home" to="/" />
+        <v-list-item prepend-icon="mdi-palette" title="Perfumes" to="/auctions" />
         <v-list-item prepend-icon="mdi-faucet" title="Faucet" to="/debug/faucet" />
       </v-list>
     </v-navigation-drawer>

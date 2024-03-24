@@ -22,24 +22,26 @@ export const useMagicStore = defineStore("magicStore", () => {
     auction: string;
   }>();
 
-  const provider = ref<() => ethers.BrowserProvider>(() => new ethers.BrowserProvider(magic.rpcProvider));
+  const provider = ref<() => ethers.BrowserProvider>(
+    () => new ethers.BrowserProvider(magic.rpcProvider)
+  );
   const signer = ref<() => ethers.JsonRpcSigner>();
   const did = ref<string>();
   const address = ref<string>();
   const isReadOnly = computed<boolean>(() => !signer.value);
   const isConnected = computed<boolean>(() => !!did.value);
-  const gasPrice = ref<BigInt>(BigInt(0))
 
   const login = async (email: string) => {
-    did.value =
-      (await magic.auth.loginWithEmailOTP({ email, showUI: true })) ||
-      undefined;
-    const signerInstance = await provider.value().getSigner();
+    const didToken = (await magic.auth.loginWithEmailOTP({
+      email,
+      showUI: true,
+    }))!;
 
+    const signerInstance = await provider.value().getSigner();
     signer.value = () => signerInstance;
     address.value = signerInstance.address;
 
-    gasPrice.value = (await provider.value().getFeeData()).gasPrice!
+    did.value = didToken;
   };
 
   const logout = async () => {
@@ -53,7 +55,11 @@ export const useMagicStore = defineStore("magicStore", () => {
     abi: ethers.Interface,
     address: string
   ): ethers.Contract {
-    return new ethers.Contract(address, abi, signer.value?.() ?? provider.value());
+    return new ethers.Contract(
+      address,
+      abi,
+      signer.value?.() ?? provider.value()
+    );
   }
 
   const coinContract = computed(() =>
@@ -78,13 +84,8 @@ export const useMagicStore = defineStore("magicStore", () => {
     resolve(42);
   });
 
-  async function loginAnd<T>(action: () => Promise<T>): Promise<T> {
-    if (!isConnected.value) {
-      await login("caceresenzo1502@gmail.com");
-      // await login(prompt("email") as string)
-    }
-
-    return action();
+  async function getGasPrice() {
+    return (await provider.value().getFeeData()).gasPrice! * BigInt(2);
   }
 
   return {
@@ -92,10 +93,9 @@ export const useMagicStore = defineStore("magicStore", () => {
     provider,
     signer,
     address,
-    gasPrice,
     login,
-    loginAnd,
     logout,
+    getGasPrice,
     isReadOnly,
     isConnected,
     coinContract,
