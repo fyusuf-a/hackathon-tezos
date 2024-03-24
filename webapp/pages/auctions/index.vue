@@ -11,20 +11,20 @@
           />
           <v-card-title>{{ getPerfume(x)?.name }}</v-card-title>
           <v-card-text>
-            <v-flex class="d-flex flex-row align-center">
+            <div class="d-flex flex-row align-center">
               <v-avatar size="32">
                 <v-img
                   src="https://www.gravatar.com/avatar/qsd?s=128&d=identicon&r=PG"
                 />
               </v-avatar>
               <a class="ml-2">Hello World</a>
-            </v-flex>
-            <v-flex class="d-flex flex-column align-end">
+            </div>
+            <div class="d-flex flex-column align-end">
               <span class="text-overline" style="line-height: unset">
                 Last bid
               </span>
               <span class="font-weight-bold"> 1324 $EUR </span>
-            </v-flex>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
