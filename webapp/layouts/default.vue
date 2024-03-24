@@ -1,12 +1,8 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar title="NectArt">
+    <v-app-bar title="Nectart">
       <template #prepend>
-        <v-app-bar-nav-icon
-          slot="prepend"
-          variant="text"
-          @click.stop="drawer = !drawer"
-        />
+        <v-app-bar-nav-icon slot="prepend" variant="text" @click.stop="drawer = !drawer" />
       </template>
     </v-app-bar>
 
