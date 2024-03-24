@@ -111,6 +111,7 @@
   <bid-stripe
     v-if="stripeDialog"
     v-model="stripeDialog"
+    :bid-id="bid.id"
     :payment-intent-id="bid.stripePaymentIntentId"
     :client-secret="bid.stripeClientSecret"
     @success="emit('success')"

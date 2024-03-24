@@ -18,6 +18,15 @@
       >
         Pay
       </v-btn>
+
+      <v-overlay
+        :model-value="pending"
+        class="align-center justify-center"
+        contained
+        persistent
+      >
+        <v-progress-circular indeterminate />
+      </v-overlay>
     </v-card>
   </v-dialog>
 </template>
@@ -27,6 +36,7 @@ const stripeStore = useStripeStore();
 import type { StripeElements } from "@stripe/stripe-js";
 
 const props = defineProps<{
+  bidId: number;
   paymentIntentId: string;
   clientSecret: string;
 }>();
@@ -34,6 +44,7 @@ const props = defineProps<{
 const emit = defineEmits(["success"]);
 
 const model = defineModel<boolean>();
+const pending = ref(false);
 
 const elements = ref<StripeElements>();
 const paymentElement = ref();
@@ -50,13 +61,32 @@ onMounted(async () => {
 });
 
 async function pay() {
-  const client = await stripeStore.client();
-  const { error } = await client!.confirmPayment({
-    elements: elements.value!,
-    redirect: "if_required",
-  });
+  pending.value = true;
 
-  console.log({ error });
-  emit("success");
+  try {
+    const client = await stripeStore.client();
+    const { error } = await client!.confirmPayment({
+      elements: elements.value!,
+      redirect: "if_required",
+    });
+
+    console.log({ error });
+
+    while (true) {
+      const bid = await $authFetch<any>(`/api/bids/${props.bidId}`);
+      if (bid.transactionHash) {
+        break;
+      }
+
+      await sleep(1_000);
+    }
+
+    model.value = false;
+    emit("success");
+  } catch (error) {
+    console.error({ error });
+  } finally {
+    pending.value = false;
+  }
 }
 </script>

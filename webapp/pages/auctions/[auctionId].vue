@@ -17,7 +17,6 @@
         <v-card class="pa-4" height="100%" width="100%">
           <div class="text-h4 text-wrap mb-2">{{ perfume.name }}</div>
           <div>
-            <v-btn @click="placed = true">qsd</v-btn>
             <div class="mb-6">
               by <strong>{{ productAuthor }}</strong>
             </div>

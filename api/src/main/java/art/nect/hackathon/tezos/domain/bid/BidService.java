@@ -11,6 +11,7 @@ import com.stripe.param.PaymentIntentCreateParams;
 import art.nect.hackathon.tezos.configuration.properties.StripeProperties;
 import art.nect.hackathon.tezos.contract.AuctionContract;
 import art.nect.hackathon.tezos.domain.bid.event.BidPaidEvent;
+import art.nect.hackathon.tezos.domain.bid.exception.BidNotFoundException;
 import art.nect.hackathon.tezos.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,6 +27,11 @@ public class BidService {
 	private final StripeClient stripeClient;
 	private final StripeProperties stripeProperties;
 	private final ApplicationEventPublisher eventPublisher;
+
+	public Bid get(long id) {
+		return repository.findById(id)
+			.orElseThrow(() -> new BidNotFoundException(id));
+	}
 
 	@SneakyThrows
 	public Bid create(User user, long auctionId, long amount) {
