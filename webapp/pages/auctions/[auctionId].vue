@@ -1,5 +1,9 @@
 <template>
-  <v-container v-if="initialRefresh" class="d-flex align-center justify-center">
+  <v-container
+    v-if="initialRefresh"
+    class="d-flex align-center justify-center"
+    style="height: 100vh"
+  >
     <v-progress-circular indeterminate />
   </v-container>
   <v-container v-else style="height: 100vh" class="d-flex align-center flex">
