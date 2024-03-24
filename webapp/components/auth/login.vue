@@ -18,8 +18,14 @@
     </v-card-text>
 
     <template v-if="centered">
-      <v-divider thickness="2" />
-      <v-btn variant="tonal" class="ma-5" rounded="0" @click.stop="login">
+      <v-btn
+        color="black"
+        variant="flat"
+        theme="dark"
+        class="ma-5"
+        rounded="0"
+        @click.stop="login"
+      >
         Continue
       </v-btn>
     </template>
@@ -31,6 +37,7 @@
       :model-value="pending"
       class="align-center justify-center"
       contained
+      persistent
     >
       <v-progress-circular indeterminate />
     </v-overlay>

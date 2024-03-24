@@ -24,6 +24,7 @@
               :model-value="pending"
               class="align-center justify-center"
               contained
+              persistent
             >
               <v-progress-circular indeterminate />
             </v-overlay>

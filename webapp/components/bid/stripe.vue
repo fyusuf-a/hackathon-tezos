@@ -4,15 +4,20 @@
       <v-card-title class="text-center">
         <strong>Payment</strong>
       </v-card-title>
-
       <v-divider thickness="2" />
       <v-card-text>
-        <div id="stripe-payment-element"></div>
+        <div id="stripe-payment-element" style="min-height: 224px"></div>
       </v-card-text>
-
-      <v-divider thickness="2" />
-
-      <v-btn variant="tonal" class="ma-5" rounded="0" @click="pay"> Pay </v-btn>
+      <v-btn
+        color="black"
+        variant="flat"
+        theme="dark"
+        class="ma-5"
+        rounded="0"
+        @click="pay"
+      >
+        Pay
+      </v-btn>
     </v-card>
   </v-dialog>
 </template>
@@ -25,6 +30,8 @@ const props = defineProps<{
   paymentIntentId: string;
   clientSecret: string;
 }>();
+
+const emit = defineEmits(["success"]);
 
 const model = defineModel<boolean>();
 
@@ -46,9 +53,10 @@ async function pay() {
   const client = await stripeStore.client();
   const { error } = await client!.confirmPayment({
     elements: elements.value!,
-    redirect: "if_required"
+    redirect: "if_required",
   });
 
   console.log({ error });
+  emit("success");
 }
 </script>

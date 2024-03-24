@@ -17,6 +17,7 @@
         <v-card class="pa-4" height="100%" width="100%">
           <div class="text-h4 text-wrap mb-2">{{ perfume.name }}</div>
           <div>
+            <v-btn @click="placed = true">qsd</v-btn>
             <div class="mb-6">
               by <strong>{{ productAuthor }}</strong>
             </div>
@@ -60,7 +61,9 @@
       :best-bid="bestBid"
       :coin-contract-address="coinContractAddress"
       :auction-id="auctionId"
+      @success="placed = true"
     />
+    <bid-placed v-model="placed" />
   </v-container>
 </template>
 
@@ -154,6 +157,8 @@ async function refresh() {
     initialRefresh.value = false;
   }
 }
+
+const placed = ref(false);
 
 onMounted(refresh);
 useIntervalFn(refresh, 2000);

@@ -5,13 +5,11 @@
       style="min-width: 500px"
       centered
     />
-    <v-card v-else ref="cardRef" min-width="500px">
+    <v-card v-else min-width="500px">
       <v-card-title class="text-center">
-        <strong>Make an Offer</strong>
+        <strong>Make an offer</strong>
       </v-card-title>
-
       <v-divider thickness="2" />
-
       <v-tabs v-model="tab" height="40">
         <v-tab size="small">
           <v-icon start>mdi-credit-card</v-icon>
@@ -32,12 +30,18 @@
         <v-window v-model="tab">
           <v-window-item>
             <v-form>
-              <v-text-field v-model="name" label="Name" />
+              <v-text-field
+                v-model="name"
+                label="Name"
+                variant="outlined"
+                class="mt-1"
+              />
               <v-text-field
                 v-model="email"
                 label="Email"
                 type="email"
                 hide-details
+                variant="outlined"
               />
             </v-form>
           </v-window-item>
@@ -68,9 +72,14 @@
         <strong>${{ amount }}</strong>
       </div>
 
-      <v-divider thickness="2" />
-
-      <v-btn variant="tonal" class="ma-5" rounded="0" @click="doBid">
+      <v-btn
+        color="black"
+        variant="flat"
+        theme="dark"
+        class="ma-5"
+        rounded="0"
+        @click="doBid"
+      >
         Make offer
       </v-btn>
 
@@ -78,16 +87,17 @@
         :model-value="pending"
         class="align-center justify-center"
         contained
+        persistent
       >
         <v-progress-circular indeterminate />
       </v-overlay>
 
       <v-snackbar v-model="snackbar" :timeout="10_000">
-        Coins have been
+        Bid has been
         <a
           :href="`https://testnet-explorer.etherlink.com/tx/${transactionHash}`"
           target="_blank"
-          >minted</a
+          >placed</a
         >.
 
         <template v-slot:actions>
@@ -103,21 +113,20 @@
     v-model="stripeDialog"
     :payment-intent-id="bid.stripePaymentIntentId"
     :client-secret="bid.stripeClientSecret"
+    @success="emit('success')"
   />
 </template>
 
 <script setup lang="ts">
-import party from "party-js";
-
 const magicStore = useMagicStore();
-
-const cardRef = ref<{ $el: HTMLElement }>();
 
 const props = defineProps<{
   bestBid: number;
   coinContractAddress: string;
   auctionId: number;
 }>();
+
+const emit = defineEmits(["success"]);
 
 const name = ref("");
 const email = ref("");
@@ -228,6 +237,8 @@ async function bidViaEthereum() {
 
     console.log({ receipt });
   }
+
+  emit("success");
 }
 
 async function doBid() {
@@ -239,11 +250,7 @@ async function doBid() {
       await bidViaEthereum();
     }
 
-    party.confetti(cardRef.value?.$el!, {
-      count: party.variation.range(20, 40),
-    });
-
-    // model.value = false;
+    model.value = false;
   } catch (error) {
     console.log({ error });
   } finally {
