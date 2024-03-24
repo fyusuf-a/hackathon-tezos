@@ -28,9 +28,15 @@
               <span>Owned by</span>
               <strong>{{ bestBidderName }}</strong>
             </div>
-            <v-btn block variant="outlined" rounded class="my-2"
-              >Make an offer</v-btn
+            <v-btn
+              block
+              variant="outlined"
+              rounded
+              class="my-2"
+              @click="offerDialog = true"
             >
+              Make an offer
+            </v-btn>
           </div>
           <v-divider class="my-4" thickness="2" />
           <div class="d-flex align-center mb-4">
@@ -49,6 +55,13 @@
         </v-card>
       </v-col>
     </v-row>
+    <BidSubmissionModal
+      v-model="offerDialog"
+      :best-bid="bestBid"
+      :symbol="symbol"
+      :coin-contract-address="coinContractAddress"
+      :auction-id="auctionId"
+    />
   </v-container>
 </template>
 
@@ -84,6 +97,8 @@ const sellerName = ref<string>();
 const bestBidderName = ref<string>();
 const decimals = ref<number>();
 const symbol = ref<string>();
+
+const offerDialog = ref(false);
 
 const initialRefresh = ref(true);
 const pending = ref(false);

@@ -1,11 +1,29 @@
 <template>
-  <v-card title="Login">
+  <v-card :title="!centered ? 'Login' : undefined">
+    <template v-if="centered">
+      <v-card-title class="text-center">
+        <strong> Login </strong>
+      </v-card-title>
+      <v-divider thickness="2" />
+    </template>
     <v-card-text>
       <v-form @submit.prevent="login">
-        <v-text-field v-model="email" label="Email" hide-details />
+        <v-text-field
+          v-model="email"
+          label="Email"
+          hide-details
+          :variant="centered ? 'outlined' : undefined"
+        />
       </v-form>
     </v-card-text>
-    <v-card-actions class="justify-end">
+
+    <template v-if="centered">
+      <v-divider thickness="2" />
+      <v-btn variant="tonal" class="ma-5" rounded="0" @click.stop="login">
+        Continue
+      </v-btn>
+    </template>
+    <v-card-actions v-else class="justify-end">
       <v-btn :disabled="!email" @click="login"> LOGIN </v-btn>
     </v-card-actions>
 
@@ -21,6 +39,15 @@
 
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
+
+const props = withDefaults(
+  defineProps<{
+    centered?: boolean;
+  }>(),
+  {
+    centered: false,
+  }
+);
 
 const magicStore = useMagicStore();
 
