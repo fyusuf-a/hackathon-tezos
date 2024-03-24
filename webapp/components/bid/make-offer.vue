@@ -10,23 +10,23 @@
         <strong>Make an offer</strong>
       </v-card-title>
       <v-divider thickness="2" />
-      <v-tabs v-model="tab" height="40">
-        <v-tab size="small">
-          <v-icon start>mdi-credit-card</v-icon>
-          Credit Card
-        </v-tab>
-        <v-tab size="small">
-          <v-icon start>mdi-ethereum</v-icon>
-          Ethereum
-        </v-tab>
-      </v-tabs>
-
-      <div class="d-flex justify-space-between mt-3 mx-6">
-        <span>Current offer</span>
-        <strong>${{ bestBid }}</strong>
-      </div>
-
       <v-card-text>
+        <v-tabs v-model="tab" height="40">
+          <v-tab size="small">
+            <v-icon start>mdi-credit-card</v-icon>
+            Credit Card
+          </v-tab>
+          <v-tab size="small">
+            <v-img width="16" height="16" :src="tezos" class="v-icon--start" />
+            Web3
+          </v-tab>
+        </v-tabs>
+
+        <div class="d-flex justify-space-between mt-8 mb-12">
+          <span>Current offer</span>
+          <strong>${{ bestBid }}</strong>
+        </div>
+
         <v-window v-model="tab">
           <v-window-item>
             <v-form>
@@ -46,7 +46,10 @@
             </v-form>
           </v-window-item>
           <v-window-item>
-            <address-avatar :address="magicStore.address" />
+            <div class="d-flex justify-space-between mx-1">
+              <span>Account debited</span>
+              <address-avatar :address="magicStore.address" short />
+            </div>
           </v-window-item>
         </v-window>
       </v-card-text>
@@ -58,7 +61,7 @@
           label="Amount"
           variant="outlined"
           required
-          class="mt-3 mb-3"
+          class="mb-3"
           hide-details
           type="number"
           :min="bestBid + 1"
@@ -104,6 +107,8 @@
 </template>
 
 <script setup lang="ts">
+import tezos from "~/assets/tezos.svg";
+
 const magicStore = useMagicStore();
 
 const props = defineProps<{

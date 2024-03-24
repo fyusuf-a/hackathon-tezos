@@ -32,7 +32,15 @@
               <span>Best bidder</span>
               <strong>{{ bestBidderName }}</strong>
             </div>
-            <v-btn block variant="outlined" rounded class="my-2" @click="offerDialog = true">
+            <v-btn
+              block
+              color="black"
+              variant="flat"
+              theme="dark"
+              rounded
+              class="my-2 mt-8"
+              @click="offerDialog = true"
+            >
               Make an offer
             </v-btn>
           </div>
