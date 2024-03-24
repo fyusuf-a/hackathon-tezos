@@ -8,12 +8,14 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-@Schema(name = "User")
-public class UserDto {
+@Schema(name = "Bid")
+public class BidDto {
 
-	private String address;
-	private String email;
-	private String name;
+	private long id;
+	private long userId;
+	private long auctionId;
+	private long amount;
+	private String stripePaymentIntentId;
 	private LocalDateTime createdAt;
 
 }

@@ -1,17 +1,24 @@
 package art.nect.hackathon.tezos.domain.user;
 
+import java.util.Map;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+
+import com.stripe.StripeClient;
+import com.stripe.param.CustomerCreateParams;
 
 import art.nect.hackathon.tezos.domain.user.exception.UserNotFoundException;
 import art.nect.hackathon.tezos.web.form.UserPatchForm;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 @Component
 @RequiredArgsConstructor
 public class UserService {
 
 	private final UserRepository repository;
+	private final StripeClient stripeClient;
 
 	public User create(String address) {
 		try {
@@ -45,6 +52,30 @@ public class UserService {
 		}
 
 		return repository.save(user);
+	}
+
+	@SneakyThrows
+	public synchronized User validateStripeCustomer(User user) {
+		user = repository.findById(user.getId()).get();
+
+		if (user.getStripeCustomerId() == null) {
+			final var customer = stripeClient.customers().create(
+				new CustomerCreateParams.Builder()
+					.setEmail(user.getEmail())
+					.setName(user.getName())
+					.setMetadata(Map.of(
+						"address", user.getAddress()
+					))
+					.build()
+			);
+
+			repository.save(
+				user
+					.setStripeCustomerId(customer.getId())
+			);
+		}
+
+		return user;
 	}
 
 }

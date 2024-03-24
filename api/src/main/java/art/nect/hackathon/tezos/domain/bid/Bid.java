@@ -1,18 +1,19 @@
-package art.nect.hackathon.tezos.domain.user;
+package art.nect.hackathon.tezos.domain.bid;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import art.nect.hackathon.tezos.domain.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,34 +22,28 @@ import lombok.experimental.FieldNameConstants;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "users", uniqueConstraints = {
-	@UniqueConstraint(name = User.UNIQUE_ADDRESS_CONTRAINT, columnNames = {
-		User.Fields.address
-	})
-})
+@Table(name = "bids")
 @FieldNameConstants
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-public class User {
-
-	public static final String UNIQUE_ADDRESS_CONTRAINT = "user__unique__address";
+public class Bid {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private long id;
 
+	@ManyToOne(optional = false)
+	private User user;
+
 	@Column(nullable = false)
-	private String address;
+	private long auctionId;
 
-	@Column(nullable = true)
-	private String email;
+	@Column(nullable = false)
+	private long amount;
 
-	@Column(nullable = true)
-	private String name;
-
-	@Column(nullable = true)
-	private String stripeCustomerId;
+	@Column(nullable = false)
+	private String stripePaymentIntentId;
 
 	@CreatedDate
 	@Column(nullable = false)

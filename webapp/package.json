@@ -12,6 +12,7 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@pinia/nuxt": "^0.5.1",
+    "@stripe/stripe-js": "^3.0.10",
     "ethers": "^6.11.1",
     "magic-sdk": "^28.0.1",
     "nuxt": "^3.11.1",

@@ -27,5 +27,8 @@ public class StripeProperties {
 	@NotBlank
 	@ToString.Exclude
 	private String endpointSecret;
+	
+	@NotBlank
+	private String currency = "USD";
 
 }

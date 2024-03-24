@@ -6,8 +6,9 @@ import lombok.experimental.UtilityClass;
 public class Tags {
 
 	public static final String AUTH = "auth";
+	public static final String BID = "bid";
+	public static final String CONFIGURATION = "configuration";
 	public static final String EXTERNAL = "external";
 	public static final String USER = "user";
-	public static final String WEB3 = "web3";
 
 }
