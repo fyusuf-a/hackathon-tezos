@@ -25,7 +25,7 @@
               <strong>{{ bestBid }} ${{ symbol }}</strong>
             </div>
             <div class="d-flex justify-space-between mb-2">
-              <span>Owned by</span>
+              <span>Best bidder</span>
               <strong>{{ bestBidderName }}</strong>
             </div>
             <v-btn
