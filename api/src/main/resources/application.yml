@@ -42,5 +42,5 @@ web3:
   chain-id: 128123
   contracts:
     usdc: "0x22D20809e513dfF439BacaE4CcEA55A205FDFc79"
-    nectart: "0xF18B7fE6aB807540674B77cf00b80f3Dc0dF97a1"
-    auction: "0xfb855AF19f8dae93c8E777B38A0dF6d80222E664"
+    nectart: "0xe50e226dD8148F5Ed9dB6d12934EA0FBA4Bf43eE"
+    auction: "0xc0818cfCe9E2412648fe13d428c8d3D81b75810E"
