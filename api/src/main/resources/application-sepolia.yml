@@ -1,0 +1,7 @@
+web3:
+  client-address: https://public.stackup.sh/api/v1/node/ethereum-sepolia
+  chain-id: 11155111
+  contracts:
+    usdc: "0xf1bAc2845712b3f8A1Efc2A44CccEb321dE26311"
+    nectart: "0x3340195F3372A7f21D639033879C9712eACfecDe"
+    auction: "0xd86F26c549C3992d3A00beBD2fBC820F51f0afaB"

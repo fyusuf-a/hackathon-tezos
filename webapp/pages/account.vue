@@ -9,6 +9,9 @@
           <v-card title="Account">
             <v-card-text>
               <v-form>
+                <v-input>
+                  <address-avatar :address="magicStore.address" />
+                </v-input>
                 <v-text-field v-model="name" label="Name" />
                 <v-text-field v-model="email" label="Email" type="email" />
               </v-form>

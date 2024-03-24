@@ -42,18 +42,7 @@
             </v-form>
           </v-window-item>
           <v-window-item>
-            <div class="d-flex flex-row align-center">
-              <v-avatar size="32">
-                <v-img :src="`/api/users/${magicStore.address}/avatar`" />
-              </v-avatar>
-              <a
-                class="ml-2 text-decoration-none"
-                :href="`https://testnet-explorer.etherlink.com/address/${magicStore.address}`"
-                target="_blank"
-                @click.stop
-                >{{ magicStore.address }}</a
-              >
-            </div>
+            <address-avatar :address="magicStore.address" />
           </v-window-item>
         </v-window>
       </v-card-text>
