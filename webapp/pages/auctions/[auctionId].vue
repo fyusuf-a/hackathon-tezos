@@ -22,7 +22,7 @@
           <div class="text-h4 text-wrap mb-2">{{ perfume.name }}</div>
           <div>
             <div class="mb-6">
-              by <strong>{{ productAuthor }}</strong>
+              by <strong>{{ perfume.creatorName }}</strong>
             </div>
             <div class="d-flex justify-space-between mb-2">
               <span>Best bid</span>
@@ -32,29 +32,21 @@
               <span>Best bidder</span>
               <strong>{{ bestBidderName }}</strong>
             </div>
-            <v-btn
-              block
-              variant="outlined"
-              rounded
-              class="my-2"
-              @click="offerDialog = true"
-            >
+            <v-btn block variant="outlined" rounded class="my-2" @click="offerDialog = true">
               Make an offer
             </v-btn>
           </div>
           <v-divider class="my-4" thickness="2" />
           <div class="d-flex align-center mb-4">
-            <v-avatar :image="jose" size="80" class="mr-3" />
+            <v-avatar :image="perfume.avatarUrl" size="80" class="mr-3" />
             <p class="text-h6">
-              <strong>{{ productAuthor }}</strong>
+              <strong>{{ perfume.creatorName }}</strong>
             </p>
           </div>
           <v-divider class="my-4" thickness="2" />
           <div>
             <p class="text-h6 mb-2"><strong>Description</strong></p>
-            <ExpendableTextView
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien fermentum aliquam. Nullam nec nunc nec nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien fermentum aliquam. Nullam nec nunc nec nunc."
-            />
+            <ExpendableTextView :text="perfume.description" />
           </div>
         </v-card>
       </v-col>
@@ -72,8 +64,6 @@
 
 <script setup lang="ts">
 import { getPerfume } from "~/data/perfumes";
-
-import jose from "~/assets/jose.jpg";
 
 const magicStore = useMagicStore();
 
