@@ -62,9 +62,11 @@ export const useMagicStore = defineStore("magicStore", () => {
     );
   }
 
-  const coinContract = computed(() =>
-    loadContract(USDCToken.abi as any, addresses.value?.usdc!)
-  );
+  function loadERC20(address: string) {
+    return loadContract(USDCToken.abi as any, address);
+  }
+
+  const coinContract = computed(() => loadERC20(addresses.value?.usdc!));
 
   const nftContract = computed(() =>
     loadContract(NectartToken.abi as any, addresses.value?.nectart!)
@@ -98,6 +100,7 @@ export const useMagicStore = defineStore("magicStore", () => {
     getGasPrice,
     isReadOnly,
     isConnected,
+    loadERC20,
     coinContract,
     nftContract,
     auctionContract,
